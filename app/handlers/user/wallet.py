@@ -26,7 +26,7 @@ async def wallet_handler(message: Message, bot: Bot):
     wallet = await api.get_wallet(user.public_key, user.private_key)
 
     await bot.edit_message_text(
-        f"💰 <b>Кошелек</b>\n\n<b>Coins:</b> {wallet} ≈ ...",
+        f"💰 <b>Кошелек</b>\n\n<b>Coins:</b> {wallet}",
         user_id,
         msg.message_id,
         reply_markup=wallet_keyboard(),

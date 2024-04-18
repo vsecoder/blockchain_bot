@@ -14,7 +14,7 @@ def wallet_keyboard():
     buttons = [
         [
             InlineKeyboardButton(text="➡️ Перевести", callback_data="pay"),
-            InlineKeyboardButton(text="➕ Получить", url="https://t.me/vsecoder"),
+            InlineKeyboardButton(text="➕ Получить", callback_data="get"),
         ],
         [InlineKeyboardButton(text="🔄 Обновить", callback_data="refresh")],
     ]

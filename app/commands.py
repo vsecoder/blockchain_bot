@@ -4,9 +4,8 @@ from aiogram.types import BotCommand, BotCommandScopeChat, BotCommandScopeDefaul
 from app.config import Config
 
 users_commands = {
-    "help": "Показать список команд",
-    "about": "Показать информацию о боте",
-    "dialog": "Запустить тестовый диалог",
+    "wallet": "Показать кошелёк",
+    "sponsors": "Показать спонсоров"
 }
 
 owner_commands = {**users_commands, "ping": "Check bot ping", "stats": "Show bot stats"}

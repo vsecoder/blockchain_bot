@@ -1,4 +1,4 @@
-from aiogram import Bot, Router
+from aiogram import Bot, Router, F
 from aiogram.filters import Command
 from aiogram.types import Message
 
@@ -22,13 +22,16 @@ async def help_handler(message: Message, config: Config):
     await message.answer(text)
 
 
-@router.message(Command(commands=["about"]))
-async def about_handler(message: Message, bot: Bot, config: Config):
+@router.callback_query(F.data.startswith('pay'))
+@router.message(Command(commands=["help_pay"]))
+async def about_pay_handler(message: Message, bot: Bot):
     bot_information = await bot.get_me()
-    await message.answer(
-        "<b>ℹ️ Информация о боте:</b> \n\n"
-        f"<b>Название - </b> {bot_information.full_name} \n"
-        f"<b>Username - </b> @{bot_information.username} \n"
-        f"<b>ID - </b> <code>{bot_information.id}</code> \n",
-        reply_markup=get_author_keyboard(owner_id=config.settings.owner_id),
+    await bot.send_message(message.from_user.id,
+        "<b>ℹ️ Информация о переводах:</b> \n\n"
+        "<i>Перевод осуществляется командой /pay, "
+        "которая принимает 2 аргумента:\n"
+        "- id пользователя телеграм\n"
+        "- сумма, сколько перевести\n\n</i>"
+        "<code>/pay 1218845111 10</code>\n"
+        "Переведёт пользователю @vsecoder 10 Coins"
     )

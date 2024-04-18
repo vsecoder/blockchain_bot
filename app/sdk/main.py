@@ -29,5 +29,5 @@ class API:
         return await self._request(
             f"{self._api}bc/transfer",
             "POST",
-            data={"_from": from_, "_to": to, "amount": amount},
+            data={"from_": from_, "to": to, "amount": amount},
         )
