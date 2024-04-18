@@ -27,7 +27,6 @@ class API:
 
     async def transfer(self, from_: str, to: str, amount: float) -> dict:
         return await self._request(
-            f"{self._api}bc/transfer",
+            f"{self._api}bc/transfer?from_={from_}&to={to}&amount={amount}",
             "POST",
-            data={"from_": from_, "to": to, "amount": amount},
         )

@@ -4,7 +4,6 @@ from aiogram.types import Message
 
 from app.sdk.main import API
 from app.db.functions import User
-from app.keyboards.inline import wallet_keyboard
 
 router = Router()
 api = API()
@@ -56,4 +55,4 @@ async def pay_handler(message: Message, bot: Bot):
     await bot.edit_message_text(
         str(res), user_id, msg.message_id
     )
-    await bot.send_message(user_id, "💵 <i>Вам поступил перевод!</i>", parse_mode="HTML")
+    await bot.send_message(user2.telegram_id, "💵 <i>Вам поступил перевод!</i>", parse_mode="HTML")
