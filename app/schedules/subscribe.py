@@ -17,7 +17,7 @@ async def subscribe_schedule(bot: Bot) -> None:
     sponsors = await Sponsor.get_all()
     api = API()
     statistic_claimed = 0
-    owner = parse_config().settings.owner
+    owner = parse_config().settings.owner_id
 
     for user in await User.get_all():
         claimed = 0
