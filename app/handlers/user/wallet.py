@@ -1,4 +1,4 @@
-from aiogram import Router, Bot
+from aiogram import Router, Bot, F
 from aiogram.filters import Command
 from aiogram.types import Message
 
@@ -11,6 +11,7 @@ api = API()
 
 
 @router.message(Command(commands=["wallet"]))
+@router.callback_query(F.data.startswith("refresh"))
 async def wallet_handler(message: Message, bot: Bot):
     user_id = message.from_user.id
     user = await User.is_registered(message.from_user.id)
