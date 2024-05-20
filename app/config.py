@@ -11,6 +11,11 @@ class ConfigBot:
 
 
 @dataclass
+class ConfigSDK:
+    key: str
+
+
+@dataclass
 class ConfigDatabase:
     models: list[str]
     protocol: str = "sqlite"
@@ -61,6 +66,7 @@ class Config:
     database: ConfigDatabase
     settings: ConfigSettings
     api: ConfigApi
+    sdk: ConfigSDK
 
     @classmethod
     def parse(cls, data: dict) -> "Config":
@@ -85,7 +91,8 @@ class Config:
         return cls(**sections)
 
 
-def parse_config(config_file: str) -> Config:
+def parse_config() -> Config:
+    config_file = os.getenv("CONFIG_FILE", "config.toml")
     if not os.path.isfile(config_file) and not config_file.endswith(".toml"):
         config_file += ".toml"
 

@@ -23,6 +23,10 @@ class User(models.User):
     async def get_count(cls) -> int:
         return await cls.all().count()
 
+    @classmethod
+    async def get_all(cls):
+        return await cls.all()
+
 
 class Sponsor(models.Sponsor):
     @classmethod

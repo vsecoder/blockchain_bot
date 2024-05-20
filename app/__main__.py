@@ -6,13 +6,9 @@ from aiogram import Bot, Dispatcher
 from aiogram.client.session.aiohttp import AiohttpSession
 from aiogram.client.telegram import TelegramAPIServer
 from aiogram.fsm.storage.memory import MemoryStorage
-from aiogram.fsm.storage.redis import DefaultKeyBuilder, RedisStorage
-from aiogram.webhook.aiohttp_server import SimpleRequestHandler, setup_application
-from aiohttp import web
-from pyrogram import Client
 
 from app import db
-from app.arguments import parse_arguments
+from app.schedules import scheduler
 from app.config import Config, parse_config
 from app.db import close_orm, init_orm
 from app.handlers import get_handlers_router
@@ -67,8 +63,7 @@ async def main():
     coloredlogs.install(level=logging.INFO)
     logging.warning("Starting bot...")
 
-    arguments = parse_arguments()
-    config = parse_config(arguments.config)
+    config = parse_config()
 
     tortoise_config = config.database.get_tortoise_config()
     try:
@@ -94,6 +89,7 @@ async def main():
 
     context_kwargs = {"config": config}
 
+    asyncio.create_task(scheduler(bot=bot))
     await dp.start_polling(bot, **context_kwargs)
 
 
