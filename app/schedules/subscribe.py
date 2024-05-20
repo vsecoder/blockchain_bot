@@ -29,9 +29,13 @@ async def subscribe_schedule(bot: Bot) -> None:
                     claimed += 0.001
             except Exception as e:
                 logger.error(f"Error: {e}")
-        await bot.send_message(
-            user.telegram_id, f"🔄 <i>Вы получили за подписки {claimed} minicoins</i>"
-        )
+        try:
+            await bot.send_message(
+                user.telegram_id,
+                f"🔄 <i>Вы получили за подписки {claimed} minicoins</i>",
+            )
+        except Exception as e:
+            logger.error(f"Error: {e}")
         statistic_claimed += claimed
 
     await bot.send_message(
