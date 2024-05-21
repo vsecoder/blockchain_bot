@@ -32,7 +32,7 @@ async def recreate_handler(message: Message, bot: Bot):
         await User.edit_wallet(
             user.telegram_id, wallet["address"]["pbc"], wallet["address"]["pve"]
         )
-        api.credit(wallet["address"]["pbc"], 0.01)
+        await api.credit(wallet["address"]["pbc"], 0.01)
 
         try:
             await bot.send_message(
