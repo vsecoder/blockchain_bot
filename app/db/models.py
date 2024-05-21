@@ -19,6 +19,7 @@ class Collection(Model):
     id = fields.BigIntField(pk=True)
     owner_id = fields.BigIntField()
     amount = fields.FloatField()
-    currency = fields.CharField(max_length=255)
     description = fields.TextField()
     history = fields.JSONField()  # история транзакций
+    created_at = fields.DatetimeField(auto_now_add=True)
+    content = fields.JSONField()  # контент коллекции

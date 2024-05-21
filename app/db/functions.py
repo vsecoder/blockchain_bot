@@ -27,6 +27,13 @@ class User(models.User):
     async def get_all(cls):
         return await cls.all()
 
+    @classmethod
+    async def edit_wallet(cls, telegram_id, public_key, private_key):
+        user = await cls.get(telegram_id=telegram_id)
+        user.public_key = public_key
+        user.private_key = private_key
+        await user.save()
+
 
 class Sponsor(models.Sponsor):
     @classmethod
@@ -46,25 +53,4 @@ class Sponsor(models.Sponsor):
 
 
 class Collection(models.Collection):
-    @classmethod
-    async def is_registered(cls, owner_id: int) -> Union[models.Collection, bool]:
-        try:
-            return await cls.get(owner_id=owner_id)
-        except DoesNotExist:
-            return False
-
-    @classmethod
-    async def register(cls, owner_id, amount, currency, description):
-        await Collection(
-            owner_id=owner_id, amount=amount, currency=currency, description=description
-        ).save()
-
-    @classmethod
-    async def get_all(cls):
-        return await cls.all()
-
-    @classmethod
-    async def pay(cls, owner_id, amount):
-        collection = await cls.get(owner_id)
-        collection.amount += amount
-        await collection.save()
+    pass
