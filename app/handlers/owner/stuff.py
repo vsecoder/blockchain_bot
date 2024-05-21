@@ -6,7 +6,6 @@ from aiogram.types import Message
 
 from app.filters.is_owner import IsOwner
 from app.db.functions import User
-from app.sdk.main import API
 
 router = Router()
 
@@ -22,24 +21,17 @@ async def ping_handler(message: Message):
     )
 
 
-@router.message(IsOwner(is_owner=True), Command(commands=["recreate_wallets"]))
-async def recreate_handler(message: Message, bot: Bot):
-    api = API()
+@router.message(IsOwner(is_owner=True), Command(commands=["send"]))
+async def send_handler(message: Message, bot: Bot):
     users = await User.get_all()
+    text = message.text.split(" ", 1)[1]
+    count = 0
 
     for user in users:
-        wallet = await api.create_wallet()
-        await User.edit_wallet(
-            user.telegram_id, wallet["address"]["pbc"], wallet["address"]["pve"]
-        )
-        await api.credit(wallet["address"]["pbc"], 0.01)
-
         try:
-            await bot.send_message(
-                user.telegram_id,
-                f"💰 <b>В связи с большой обновой кошельки пересозданы, и всем было начислено 0.01 minicoin",
-            )
-        except Exception as e:
+            await bot.send_message(user.telegram_id, text)
+            count += 1
+        except:
             pass
 
-    await message.answer("🔄 <b>Кошельки пересозданы!</b>")
+    await message.answer(f"🔄 <i>Сообщение получило {count} человек")
